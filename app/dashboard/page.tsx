@@ -11,6 +11,7 @@ import {
   TableBody,
   Table,
 } from "@/components/ui/table";
+import Image from "next/image";
 
 export default function DashboardPage() {
   return (
@@ -180,7 +181,7 @@ export default function DashboardPage() {
           <CardContent>
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               <div className="bg-gray-100 dark:bg-gray-800/35 rounded-lg p-4 flex flex-col gap-2">
-                <img
+                <Image
                   alt="Product 1"
                   className="rounded-lg object-cover"
                   height={100}
@@ -198,7 +199,7 @@ export default function DashboardPage() {
                 <div className="font-semibold">$99.99</div>
               </div>
               <div className="bg-gray-100 dark:bg-gray-800/35 rounded-lg p-4 flex flex-col gap-2">
-                <img
+                <Image
                   alt="Product 2"
                   className="rounded-lg object-cover"
                   height={100}
@@ -209,6 +210,7 @@ export default function DashboardPage() {
                   }}
                   width={100}
                 />
+                <img />
                 <h3 className="text-lg font-semibold">Product 2</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   Description of Product 2.
@@ -216,7 +218,7 @@ export default function DashboardPage() {
                 <div className="font-semibold">$49.99</div>
               </div>
               <div className="bg-gray-100 dark:bg-gray-800/35 rounded-lg p-4 flex flex-col gap-2">
-                <img
+                <Image
                   alt="Product 3"
                   className="rounded-lg object-cover"
                   height={100}

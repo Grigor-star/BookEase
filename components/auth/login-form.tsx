@@ -91,7 +91,7 @@ export function LoginForm({ social }: LoginFormProps) {
 export const BackButton = () => {
   return (
     <div>
-      Don't have an account?{" "}
+      Do not have an account?{" "}
       <Link className="underline" href="/auth/register">
         Sign up
       </Link>
