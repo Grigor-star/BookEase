@@ -20,10 +20,14 @@ export function AuthForm({
   return (
     <div className="w-[100vw] h-full flex flex-col justify-center lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
-        <div className="mx-auto space-y-5">
+        <div className="mx-auto space-y-5 flex flex-col items-center max-w-[90vw]">
           <div className=" gap-2 text-center">
-            <h1 className="text-3xl font-bold">{title}</h1>
-            <p className="text-balance text-muted-foreground">{description}</p>
+            <h1 className="text-2xl lg:text-3xl font-bold text-balance">
+              {title}
+            </h1>
+            <p className="text-balance text-muted-foreground text-[16px] lg:text-[18px]">
+              {description}
+            </p>
           </div>
           {children}
           <div className="mt-4 text-center text-sm">

@@ -14,7 +14,7 @@ export const Social = ({ disabled }: SocialProps) => {
     signIn(provider, { callbackUrl: "/dashboard" });
   }
   return (
-    <div className="w-full flex items-center gap-1">
+    <div className="w-full flex items-center gap-1 mt-5 flex-wrap lg:flex-nowrap">
       <Button
         disabled={disabled}
         onClick={() => onSubmit("google")}
