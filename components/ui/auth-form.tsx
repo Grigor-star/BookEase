@@ -18,10 +18,10 @@ export function AuthForm({
   children,
 }: AuthFormProps) {
   return (
-    <div className="w-full h-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+    <div className="w-[100vw] h-full flex flex-col justify-center lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
-          <div className="grid gap-2 text-center">
+        <div className="mx-auto space-y-5">
+          <div className=" gap-2 text-center">
             <h1 className="text-3xl font-bold">{title}</h1>
             <p className="text-balance text-muted-foreground">{description}</p>
           </div>
@@ -34,7 +34,7 @@ export function AuthForm({
       <div className="hidden bg-muted lg:block">
         <img
           alt="Image"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="h-full w-full hidden lg:block object-cover dark:brightness-[0.2] dark:grayscale"
           height="1080"
           src="/placeholder.svg"
           style={{

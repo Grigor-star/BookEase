@@ -4,6 +4,9 @@ import { AuthForm } from "@/components/ui/auth-form";
 import Link from "next/link";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import BeatLoader from "react-spinners/BeatLoader";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { registerSchema } from "@/schemas";
@@ -19,15 +22,24 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Social } from "./social";
+import { register } from "@/actions/register";
+import { useState, useTransition } from "react";
+import { FormSuccess } from "../form-success";
+import { FormError } from "../form-error";
 
 interface RegisterFormProps {
   social?: boolean;
 }
 
 export function RegisterForm({ social }: RegisterFormProps) {
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
+
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -35,9 +47,12 @@ export function RegisterForm({ social }: RegisterFormProps) {
   });
 
   function onSubmit(values: z.infer<typeof registerSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    startTransition(async () => {
+      await register(values).then((data) => {
+        setError(data?.error);
+        setSuccess(data?.success);
+      });
+    });
   }
   return (
     <AuthForm
@@ -49,12 +64,32 @@ export function RegisterForm({ social }: RegisterFormProps) {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
             control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={isPending}
+                    type="text"
+                    placeholder="John Johnson"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
+                    disabled={isPending}
                     type="email"
                     placeholder="john@example.com"
                     {...field}
@@ -72,7 +107,12 @@ export function RegisterForm({ social }: RegisterFormProps) {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="******" {...field} />
+                  <Input
+                    disabled={isPending}
+                    type="password"
+                    placeholder="******"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription></FormDescription>
                 <FormMessage />
@@ -81,23 +121,34 @@ export function RegisterForm({ social }: RegisterFormProps) {
           />
           <FormField
             control={form.control}
-            name="password"
+            name="confirmPassword"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="******" {...field} />
+                  <Input
+                    disabled={isPending}
+                    type="password"
+                    placeholder="******"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription></FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button className="w-full" type="submit">
-            Submit
+          <FormSuccess message={success} />
+          <FormError message={error} />
+          <Button disabled={isPending} className="w-full" type="submit">
+            {isPending ? (
+              <BeatLoader className="text-white" size={10} />
+            ) : (
+              "Submit"
+            )}
           </Button>
         </form>
-        {social && <Social />}
+        {social && <Social disabled={isPending} />}
       </Form>
     </AuthForm>
   );

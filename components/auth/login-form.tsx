@@ -19,12 +19,15 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Social } from "./social";
+import { useTransition } from "react";
+import BeatLoader from "react-spinners/BeatLoader";
 
 interface LoginFormProps {
   social?: boolean;
 }
 
 export function LoginForm({ social }: LoginFormProps) {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -34,9 +37,9 @@ export function LoginForm({ social }: LoginFormProps) {
   });
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    startTransition(() => {
+      console.log(values);
+    });
   }
   return (
     <AuthForm
@@ -54,6 +57,7 @@ export function LoginForm({ social }: LoginFormProps) {
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
+                    disabled={isPending}
                     type="email"
                     placeholder="john@example.com"
                     {...field}
@@ -71,18 +75,23 @@ export function LoginForm({ social }: LoginFormProps) {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="******" {...field} />
+                  <Input
+                    disabled={isPending}
+                    type="password"
+                    placeholder="******"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription></FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button className="w-full" type="submit">
-            Submit
+          <Button disabled={isPending} className="w-full" type="submit">
+            {isPending ? <BeatLoader /> : "Submit"}
           </Button>
         </form>
-        {social && <Social />}
+        {social && <Social disabled={isPending} />}
       </Form>
     </AuthForm>
   );

@@ -5,13 +5,18 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
 import { signIn } from "next-auth/react";
 
-export const Social = () => {
+interface SocialProps {
+  disabled: boolean;
+}
+
+export const Social = ({ disabled }: SocialProps) => {
   function onSubmit(provider: "google" | "github") {
     signIn(provider, { callbackUrl: "/dashboard" });
   }
   return (
     <div className="w-full flex items-center gap-1">
       <Button
+        disabled={disabled}
         onClick={() => onSubmit("google")}
         variant="outline"
         className="flex items-center w-full gap-2"
@@ -20,6 +25,7 @@ export const Social = () => {
         Continue with Google
       </Button>
       <Button
+        disabled={disabled}
         onClick={() => onSubmit("github")}
         variant="outline"
         className="flex items-center w-full gap-2"

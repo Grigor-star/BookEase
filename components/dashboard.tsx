@@ -27,17 +27,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import { ModeToggle } from "./mode-toggle";
+import { usePathname } from "next/navigation";
 
-interface DashbaordProps {
+interface DashboardProps {
   children: React.ReactNode;
+  name: string;
+  email: string;
+  image: string;
 }
 
-export function Dashboard({ children }: DashbaordProps) {
+export function Dashboard({ children, name, email, image }: DashboardProps) {
+  const pathname = usePathname();
+
   return (
     <div className="grid min-h-screen w-full grid-cols-1 overflow-hidden lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r w-[19vw] bg-gray-100/40 lg:block dark:bg-gray-800/40">
+      <div className="hidden border-r w-[18vw] bg-gray-100/40 lg:block dark:bg-gray-800/40">
         <div className="flex h-full max-h-screen flex-col gap-2">
-          <div className="flex h-[60px] items-center border-b px-6 fixed w-[20vw]">
+          <div className="flex h-[60px] items-center border-b px-6 fixed w-[18vw]">
             <Link className="flex items-center gap-2 font-semibold" href="/">
               <Package2Icon className="h-6 w-6" />
               <span className="">BookEase</span>
@@ -47,39 +54,59 @@ export function Dashboard({ children }: DashbaordProps) {
               <span className="sr-only">Toggle notifications</span>
             </Button>
           </div>
-          <div className="flex-1 overflow-auto py-2 mt-[70px] fixed w-[19vw]">
+          <div className="flex-1 overflow-auto py-2 mt-[70px] fixed w-[18vw]">
             <nav className="grid items-start px-4 text-sm font-medium">
               <Link
-                className="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
-                href="#"
+                className={`flex items-center gap-3 rounded-lg ${
+                  pathname === "/dashboard"
+                    ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
+                    : "text-gray-500"
+                } px-3 py-2  transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
+                href="/dashboard"
               >
                 <HomeIcon className="h-4 w-4" />
                 Dashboard
               </Link>
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                href="#"
+                className={`flex items-center gap-3 rounded-lg ${
+                  pathname === "/invoices"
+                    ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
+                    : "text-gray-500"
+                } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
+                href="/invoices"
               >
                 <ShoppingCartIcon className="h-4 w-4" />
                 Invoices
               </Link>
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                href="#"
+                className={`flex items-center gap-3 rounded-lg ${
+                  pathname === "/services"
+                    ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
+                    : "text-gray-500"
+                } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
+                href="/services"
               >
                 <PackageIcon className="h-4 w-4" />
                 Services
               </Link>
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                href="#"
+                className={`flex items-center gap-3 rounded-lg ${
+                  pathname === "/products"
+                    ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
+                    : "text-gray-500"
+                } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
+                href="/products"
               >
                 <BoxIcon className="h-4 w-4" />
                 Products
               </Link>
               <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                href="#"
+                className={`flex items-center gap-3 rounded-lg ${
+                  pathname === "/team"
+                    ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
+                    : "text-gray-500"
+                } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
+                href="/team"
               >
                 <UsersIcon className="h-4 w-4" />
                 Team
@@ -89,8 +116,8 @@ export function Dashboard({ children }: DashbaordProps) {
         </div>
       </div>
       <div className="flex flex-col right-0">
-        <header className="flex h-14 lg:h-[60px] items-center gap-4 z-10 lg:w-[81vw] top-0 right-0 w-[100vw] fixed border-b backdrop-blur-[5px] bg-[#f9f9f9] px-6 dark:bg-gray-800/40">
-          <Link className="lg:hidden" href="#">
+        <header className="flex h-14 lg:h-[60px] items-center gap-4 z-10 lg:w-[82vw] top-0 left-[18vw] w-[100vw] fixed border-b backdrop-blur-[5px] bg-[#f9f9f9] px-6 dark:bg-gray-800/40">
+          <Link className="lg:hidden" href="/">
             <Package2Icon className="h-6 w-6" />
             <span className="sr-only">Home</span>
           </Link>
@@ -106,6 +133,7 @@ export function Dashboard({ children }: DashbaordProps) {
               </div>
             </form>
           </div>
+          <ModeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -117,7 +145,7 @@ export function Dashboard({ children }: DashbaordProps) {
                   alt="Avatar"
                   className="rounded-full"
                   height="32"
-                  src="/placeholder.svg"
+                  src={image}
                   style={{
                     aspectRatio: "32/32",
                     objectFit: "cover",
@@ -128,13 +156,21 @@ export function Dashboard({ children }: DashbaordProps) {
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuContent className="w-[200px]" align="end">
+              <div className="px-2 flex flex-col space-y-1 mt-2 mb-2">
+                <h1 className="font-semibold text-[14px]">{name}</h1>
+                <p className="text-[12px] opacity-60">{email}</p>
+              </div>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                Support
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
+                className="cursor-pointer"
                 onClick={() => {
                   signOut();
                 }}

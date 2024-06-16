@@ -12,6 +12,7 @@ import {
   Table,
 } from "@/components/ui/table";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function DashboardPage() {
   return (
@@ -78,9 +79,11 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium">
               Recent Invoices
             </CardTitle>
-            <Button size="sm" variant="outline">
-              View All
-            </Button>
+            <Link href="/invoices">
+              <Button size="sm" variant="outline">
+                View All
+              </Button>
+            </Link>
           </CardHeader>
           <CardContent>
             <Table>
