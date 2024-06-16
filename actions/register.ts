@@ -6,6 +6,8 @@ import bcrypt from "bcryptjs";
 import uuid4 from "uuid4";
 import { registerSchema } from "@/schemas";
 import * as z from "zod";
+import { sendVerificationEmail } from "@/lib/mail";
+import { generateVerificationToken } from "@/lib/token";
 
 export const register = async (values: z.infer<typeof registerSchema>) => {
   const validatedFileds = registerSchema.safeParse(values);
@@ -24,5 +26,10 @@ export const register = async (values: z.infer<typeof registerSchema>) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   await createUser({ name, email, password: hashedPassword, id: uuid4() });
-  return { success: "Account created successfully!" };
+
+  const verificationToken = await generateVerificationToken(email);
+
+  await sendVerificationEmail(verificationToken.email, verificationToken.token);
+
+  return { success: "E-mail sent!" };
 };
