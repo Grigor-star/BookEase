@@ -17,9 +17,18 @@ To read more about using these font, please visit the Next.js documentation:
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
 import {
   DropdownMenuTrigger,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuItem,
   DropdownMenuContent,
@@ -116,11 +125,74 @@ export function Dashboard({ children, name, email, image }: DashboardProps) {
         </div>
       </div>
       <div className="flex flex-col right-0">
-        <header className="flex h-14 lg:h-[60px] items-center gap-4 z-10 lg:w-[82vw] top-0 left-[18vw] w-[100vw] fixed border-b backdrop-blur-[5px] bg-[#f9f9f9] px-6 dark:bg-gray-800/40">
-          <Link className="lg:hidden" href="/">
-            <Package2Icon className="h-6 w-6" />
-            <span className="sr-only">Home</span>
-          </Link>
+        <header className="flex h-14 lg:h-[60px] items-center gap-4 z-10 lg:w-[82vw] top-0 lg:left-[18vw] w-[100vw] fixed border-b backdrop-blur-[5px] bg-[#f9f9f9] px-6 dark:bg-gray-800/40">
+          <Sheet>
+            <SheetTrigger className="lg:hidden">
+              <Package2Icon className="h-6 w-6" />
+              <span className="sr-only">Home</span>
+            </SheetTrigger>
+            <SheetContent side="left" className="lg:hidden">
+              <SheetTitle className="mt-5">Navigation</SheetTitle>
+              <nav className="grid items-start mt-3 text-sm font-medium">
+                <Link
+                  className={`flex items-center gap-3 rounded-lg ${
+                    pathname === "/dashboard"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
+                      : "text-gray-500"
+                  } px-3 py-2  transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
+                  href="/dashboard"
+                >
+                  <HomeIcon className="h-4 w-4" />
+                  Dashboard
+                </Link>
+                <Link
+                  className={`flex items-center gap-3 rounded-lg ${
+                    pathname === "/invoices"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
+                      : "text-gray-500"
+                  } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
+                  href="/invoices"
+                >
+                  <ShoppingCartIcon className="h-4 w-4" />
+                  Invoices
+                </Link>
+                <Link
+                  className={`flex items-center gap-3 rounded-lg ${
+                    pathname === "/services"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
+                      : "text-gray-500"
+                  } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
+                  href="/services"
+                >
+                  <PackageIcon className="h-4 w-4" />
+                  Services
+                </Link>
+                <Link
+                  className={`flex items-center gap-3 rounded-lg ${
+                    pathname === "/products"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
+                      : "text-gray-500"
+                  } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
+                  href="/products"
+                >
+                  <BoxIcon className="h-4 w-4" />
+                  Products
+                </Link>
+                <Link
+                  className={`flex items-center gap-3 rounded-lg ${
+                    pathname === "/team"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
+                      : "text-gray-500"
+                  } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
+                  href="/team"
+                >
+                  <UsersIcon className="h-4 w-4" />
+                  Team
+                </Link>
+              </nav>
+            </SheetContent>
+          </Sheet>
+
           <div className="w-full flex-1">
             <form>
               <div className="relative">
