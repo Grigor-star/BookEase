@@ -19,8 +19,12 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Social } from "./social";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
+import { login } from "@/actions/login";
+import { FormError } from "../form-error";
+import { FormSuccess } from "../form-success";
+import { useTheme } from "next-themes";
 
 interface LoginFormProps {
   social?: boolean;
@@ -28,6 +32,9 @@ interface LoginFormProps {
 
 export function LoginForm({ social }: LoginFormProps) {
   const [isPending, startTransition] = useTransition();
+  const theme = useTheme();
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -38,7 +45,10 @@ export function LoginForm({ social }: LoginFormProps) {
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
     startTransition(() => {
-      console.log(values);
+      login(values).then((data) => {
+        setError(data?.error);
+        setSuccess(data?.success);
+      });
     });
   }
   return (
@@ -46,6 +56,7 @@ export function LoginForm({ social }: LoginFormProps) {
       title="Sign In"
       description="Enter your email below to login to your account"
       backButton={BackButton}
+      image
     >
       <div className="max-w-[70vw] flex flex-col justify-center">
         <Form {...form}>
@@ -89,8 +100,17 @@ export function LoginForm({ social }: LoginFormProps) {
                 </FormItem>
               )}
             />
+            <FormError message={error} />
+            <FormSuccess message={success} />
             <Button disabled={isPending} className="w-full" type="submit">
-              {isPending ? <BeatLoader /> : "Submit"}
+              {isPending ? (
+                <BeatLoader
+                  color={theme.resolvedTheme !== "dark" ? "white" : "black"}
+                  size={10}
+                />
+              ) : (
+                "Submit"
+              )}
             </Button>
           </form>
           {social && <Social disabled={isPending} />}
@@ -105,7 +125,7 @@ export const BackButton = () => {
     <div>
       Do not have an account?{" "}
       <Link className="underline" href="/auth/register">
-        Sign up
+        Sign Up
       </Link>
     </div>
   );

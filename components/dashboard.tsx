@@ -217,14 +217,13 @@ export function Dashboard({ children, name, email, image }: DashboardProps) {
                   alt="Avatar"
                   className="rounded-full"
                   height="32"
-                  src={image}
+                  src={image !== "" ? image : "/placeholder.svg"}
                   style={{
                     aspectRatio: "32/32",
                     objectFit: "cover",
                   }}
                   width="32"
                 />
-                <img />
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>

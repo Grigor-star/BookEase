@@ -4,9 +4,12 @@
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 
+import Image from "next/image";
+
 interface AuthFormProps {
   title: string;
   description: string;
+  image?: boolean;
   backButton: React.ComponentType<any>;
   children: React.ReactNode;
 }
@@ -14,6 +17,7 @@ interface AuthFormProps {
 export function AuthForm({
   title,
   description,
+  image,
   backButton: BackButton,
   children,
 }: AuthFormProps) {
@@ -36,17 +40,19 @@ export function AuthForm({
         </div>
       </div>
       <div className="hidden bg-muted lg:block">
-        <img
-          alt="Image"
-          className="h-full w-full hidden lg:block object-cover dark:brightness-[0.2] dark:grayscale"
-          height="1080"
-          src="/placeholder.svg"
-          style={{
-            aspectRatio: "1920/1080",
-            objectFit: "cover",
-          }}
-          width="1920"
-        />
+        {image && (
+          <Image
+            alt="Image"
+            className="h-full w-full hidden lg:block object-cover dark:brightness-[0.2] dark:grayscale"
+            height="1080"
+            src="/placeholder.svg"
+            style={{
+              aspectRatio: "1920/1080",
+              objectFit: "cover",
+            }}
+            width="1920"
+          />
+        )}
       </div>
     </div>
   );

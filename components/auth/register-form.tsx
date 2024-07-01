@@ -26,6 +26,7 @@ import { register } from "@/actions/register";
 import { useState, useTransition } from "react";
 import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
+import { useTheme } from "next-themes";
 
 interface RegisterFormProps {
   social?: boolean;
@@ -34,6 +35,8 @@ interface RegisterFormProps {
 export function RegisterForm({ social }: RegisterFormProps) {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
+
+  const theme = useTheme();
 
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -59,6 +62,7 @@ export function RegisterForm({ social }: RegisterFormProps) {
       title="Sign Up"
       description="Create an account to continue."
       backButton={BackButton}
+      image
     >
       <div className="max-w-[70vw] flex flex-col justify-center">
         <Form {...form}>
@@ -143,7 +147,10 @@ export function RegisterForm({ social }: RegisterFormProps) {
             <FormError message={error} />
             <Button disabled={isPending} className="w-full" type="submit">
               {isPending ? (
-                <BeatLoader className="text-white" size={10} />
+                <BeatLoader
+                  color={theme.resolvedTheme !== "dark" ? "white" : "black"}
+                  size={10}
+                />
               ) : (
                 "Submit"
               )}

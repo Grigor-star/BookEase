@@ -11,7 +11,7 @@ interface SocialProps {
 
 export const Social = ({ disabled }: SocialProps) => {
   function onSubmit(provider: "google" | "github") {
-    signIn(provider, { callbackUrl: "/dashboard" });
+    signIn(provider, { callbackUrl: "/store" });
   }
   return (
     <div className="w-full flex items-center gap-1 mt-5 flex-wrap lg:flex-nowrap">
