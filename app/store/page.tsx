@@ -29,17 +29,13 @@ export default async function StorePage() {
     image = imageWithoutQuotes;
   }
 
-  const store = await db.store.findMany({ where: { userId: id } });
-  const existingStore = !!store;
+  const store = await db.store.findMany({
+    where: { userId: session?.user.id },
+  });
 
   return (
     <div className="w-full h-full flex justify-center items-center dark:bg-black">
-      <StoreForm
-        name={name}
-        image={image}
-        email={email}
-        store={existingStore}
-      />
+      <StoreForm name={name} image={image} email={email} store={store} />
     </div>
   );
 }

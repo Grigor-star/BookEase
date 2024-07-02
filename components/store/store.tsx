@@ -19,12 +19,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { Skeleton } from "../ui/skeleton";
 import { signOut } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { auth } from "@/auth";
+
+interface storeProps {
+  id: string;
+  userId: string;
+  name: string;
+  category: string;
+  description: string;
+  teamMembers: string[];
+  address: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 interface AddStoreProps {
   email: string;
   name: string;
   image: string;
-  store: boolean;
+  store: storeProps[];
 }
 
 export const StoreForm = ({ email, image, name, store }: AddStoreProps) => {
@@ -98,33 +112,30 @@ export const StoreForm = ({ email, image, name, store }: AddStoreProps) => {
         <CardTitle className="text-[14px] font-regular text-center pt-5">
           Your businesses
         </CardTitle>
-        <div className="border-[1px] border-slate-200/80 rounded-lg  px-5 py-3">
-          <div className="flex items-center space-x-4">
-            <Skeleton className="h-12 w-12 rounded-full" />
-            <div className="space-y-2">
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
-            </div>
-          </div>
-        </div>
-        <div className="border-[1px] border-slate-200/80 rounded-lg  px-5 py-3">
-          <div className="flex items-center space-x-4">
-            <Skeleton className="h-12 w-12 rounded-full" />
-            <div className="space-y-2">
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
-            </div>
-          </div>
-        </div>
-        <div className="border-[1px] border-slate-200/80 rounded-lg  px-5 py-3">
-          <div className="flex items-center space-x-4">
-            <Skeleton className="h-12 w-12 rounded-full" />
-            <div className="space-y-2">
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
-            </div>
-          </div>
-        </div>
+
+        {store.length !== 0 ? (
+          store.map((data) => (
+            <Link href={`/store/dashboard?id=${data.id}`} className="w-full">
+              <div className="border-[1px] w-full border-slate-200/80 rounded-lg  px-[25px] py-3 group ease-linear duration-200 cursor-pointer hover:bg-slate-200/50">
+                <div className="flex items-center space-x-1">
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <CardTitle>{data.name}</CardTitle>
+                      <CardTitle className="text-[14px] font-serif font-light text-black/65">
+                        {"( "}
+                        {data.category}
+                        {" )"}
+                      </CardTitle>
+                    </div>
+                    <CardDescription>{data.description}</CardDescription>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))
+        ) : (
+          <p>You do not have any store yet!</p>
+        )}
       </CardFooter>
     </Card>
   );

@@ -4,7 +4,6 @@ import authConfig from "./auth.config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import { db } from "./lib/db";
-import { findUserById } from "./data/user";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {

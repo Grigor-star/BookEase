@@ -21,8 +21,6 @@ import { Input } from "@/components/ui/input";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
@@ -37,7 +35,11 @@ import {
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { ModeToggle } from "./mode-toggle";
-import { usePathname } from "next/navigation";
+import { MdOutlineCalendarMonth } from "react-icons/md";
+
+import { useParams, usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { isAdmin } from "@/lib/isAdmin";
 
 interface DashboardProps {
   children: React.ReactNode;
@@ -48,6 +50,18 @@ interface DashboardProps {
 
 export function Dashboard({ children, name, email, image }: DashboardProps) {
   const pathname = usePathname();
+  const [storeId, setStoreId] = useState<string | undefined>();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
+  useEffect(() => {
+    console.log("id:", id);
+    if (id && id.trim() !== "") {
+      setStoreId(id);
+    } else {
+      setStoreId(undefined); // or whatever default value you need
+    }
+  }, [id]);
 
   return (
     <div className="grid min-h-screen w-full grid-cols-1 overflow-hidden lg:grid-cols-[280px_1fr]">
@@ -67,55 +81,66 @@ export function Dashboard({ children, name, email, image }: DashboardProps) {
             <nav className="grid items-start px-4 text-sm font-medium">
               <Link
                 className={`flex items-center gap-3 rounded-lg ${
-                  pathname === "/dashboard"
+                  pathname === "/store/dashboard"
                     ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
                     : "text-gray-500"
                 } px-3 py-2  transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
-                href="/dashboard"
+                href={`/store/dashboard?id=${storeId}`}
               >
                 <HomeIcon className="h-4 w-4" />
                 Dashboard
               </Link>
               <Link
                 className={`flex items-center gap-3 rounded-lg ${
-                  pathname === "/invoices"
+                  pathname === "/store/appointments"
                     ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
                     : "text-gray-500"
                 } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
-                href="/invoices"
+                href={`/store/appointments?id=${storeId}`}
+              >
+                <MdOutlineCalendarMonth className="h-4 w-4" />
+                Appointments
+              </Link>
+              <Link
+                className={`flex items-center gap-3 rounded-lg ${
+                  pathname === "/store/invoices"
+                    ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
+                    : "text-gray-500"
+                } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
+                href={`/store/invoices?id=${storeId}`}
               >
                 <ShoppingCartIcon className="h-4 w-4" />
                 Invoices
               </Link>
               <Link
                 className={`flex items-center gap-3 rounded-lg ${
-                  pathname === "/services"
+                  pathname === "/store/services"
                     ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
                     : "text-gray-500"
                 } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
-                href="/services"
+                href={`/store/services?id=${storeId}`}
               >
                 <PackageIcon className="h-4 w-4" />
                 Services
               </Link>
               <Link
                 className={`flex items-center gap-3 rounded-lg ${
-                  pathname === "/products"
+                  pathname === "/store/products"
                     ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
                     : "text-gray-500"
                 } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
-                href="/products"
+                href={`/store/products?id=${storeId}`}
               >
                 <BoxIcon className="h-4 w-4" />
                 Products
               </Link>
               <Link
                 className={`flex items-center gap-3 rounded-lg ${
-                  pathname === "/team"
+                  pathname === "/store/team"
                     ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
                     : "text-gray-500"
                 } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
-                href="/team"
+                href={`/store/team?id=${storeId}`}
               >
                 <UsersIcon className="h-4 w-4" />
                 Team
@@ -136,14 +161,25 @@ export function Dashboard({ children, name, email, image }: DashboardProps) {
               <nav className="grid items-start mt-3 text-sm font-medium">
                 <Link
                   className={`flex items-center gap-3 rounded-lg ${
-                    pathname === "/dashboard"
+                    pathname === "/store/dashboard"
                       ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
                       : "text-gray-500"
                   } px-3 py-2  transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
-                  href="/dashboard"
+                  href={`/store/dashboard?id=${storeId}`}
                 >
                   <HomeIcon className="h-4 w-4" />
                   Dashboard
+                </Link>
+                <Link
+                  className={`flex items-center gap-3 rounded-lg ${
+                    pathname === "/store/appointments"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
+                      : "text-gray-500"
+                  } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
+                  href={`/store/appointments?id=${storeId}`}
+                >
+                  <MdOutlineCalendarMonth className="h-4 w-4" />
+                  Appointments
                 </Link>
                 <Link
                   className={`flex items-center gap-3 rounded-lg ${
@@ -151,40 +187,40 @@ export function Dashboard({ children, name, email, image }: DashboardProps) {
                       ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
                       : "text-gray-500"
                   } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
-                  href="/invoices"
+                  href={`/store/invoices?id=${storeId}`}
                 >
                   <ShoppingCartIcon className="h-4 w-4" />
                   Invoices
                 </Link>
                 <Link
                   className={`flex items-center gap-3 rounded-lg ${
-                    pathname === "/services"
+                    pathname === "/store/services"
                       ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
                       : "text-gray-500"
                   } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
-                  href="/services"
+                  href={`/store/services?id=${storeId}`}
                 >
                   <PackageIcon className="h-4 w-4" />
                   Services
                 </Link>
                 <Link
                   className={`flex items-center gap-3 rounded-lg ${
-                    pathname === "/products"
+                    pathname === "/store/products"
                       ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
                       : "text-gray-500"
                   } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
-                  href="/products"
+                  href={`/store/products?id=${storeId}`}
                 >
                   <BoxIcon className="h-4 w-4" />
                   Products
                 </Link>
                 <Link
                   className={`flex items-center gap-3 rounded-lg ${
-                    pathname === "/team"
+                    pathname === "/store/team"
                       ? "bg-gray-100 text-gray-900 dark:bg-gray-800  dark:text-gray-50"
                       : "text-gray-500"
                   } px-3 py-2 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50`}
-                  href="/team"
+                  href={`/store/team?id=${storeId}`}
                 >
                   <UsersIcon className="h-4 w-4" />
                   Team
@@ -233,6 +269,13 @@ export function Dashboard({ children, name, email, image }: DashboardProps) {
                 <p className="text-[12px] opacity-60">{email}</p>
               </div>
               <DropdownMenuSeparator />
+              {pathname !== "/store" && (
+                <Link href="/store">
+                  <DropdownMenuItem className="cursor-pointer">
+                    Store
+                  </DropdownMenuItem>
+                </Link>
+              )}
               <DropdownMenuItem className="cursor-pointer">
                 Settings
               </DropdownMenuItem>

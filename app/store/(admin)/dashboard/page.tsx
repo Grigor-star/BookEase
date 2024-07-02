@@ -27,9 +27,9 @@ export default function DashboardPage() {
               <DollarSignIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">$45,231.89</div>
+              <div className="text-2xl font-bold">$0</div>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                +20.1% from last month
+                +0% from last month
               </p>
             </CardContent>
           </Card>
@@ -41,7 +41,7 @@ export default function DashboardPage() {
               <UsersIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+2350</div>
+              <div className="text-2xl font-bold">+0</div>
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 +180.1% from last month
               </p>
@@ -53,9 +53,9 @@ export default function DashboardPage() {
               <CreditCardIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+12,234</div>
+              <div className="text-2xl font-bold">+0</div>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                +19% from last month
+                +0% from last month
               </p>
             </CardContent>
           </Card>
@@ -65,9 +65,9 @@ export default function DashboardPage() {
               <ActivityIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+573</div>
+              <div className="text-2xl font-bold">+0</div>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                +201 since last hour
+                +0 since last hour
               </p>
             </CardContent>
           </Card>
