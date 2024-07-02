@@ -115,7 +115,11 @@ export const StoreForm = ({ email, image, name, store }: AddStoreProps) => {
 
         {store.length !== 0 ? (
           store.map((data) => (
-            <Link href={`/store/dashboard?id=${data.id}`} className="w-full">
+            <Link
+              key={data.id}
+              href={`/store/dashboard?id=${data.id}`}
+              className="w-full"
+            >
               <div className="border-[1px] w-full border-slate-200/80 rounded-lg  px-[25px] py-3 group ease-linear duration-200 cursor-pointer hover:bg-slate-200/50">
                 <div className="flex items-center space-x-1">
                   <div className="space-y-1">
