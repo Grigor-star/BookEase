@@ -31,7 +31,10 @@ export const createStore = async (
   if (!user) {
     return { error: "Something went wrong!" };
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
   await db.store.create({
     data: {
       name: storeName,

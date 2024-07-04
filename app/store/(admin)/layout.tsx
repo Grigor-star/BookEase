@@ -1,5 +1,9 @@
 import { auth } from "@/auth";
+<<<<<<< HEAD
 import { Dashboard } from "@/components/dashboard";
+=======
+import { Dashboard } from "@/components/dashboard/dashboard";
+>>>>>>> origin/main
 
 export default async function DashboardLayout({
   children,

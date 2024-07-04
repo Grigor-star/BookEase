@@ -16,15 +16,25 @@ interface AddStoreFormProps {
 export const AddStoreForm = ({ children, page }: AddStoreFormProps) => {
   return (
     <div className="">
+<<<<<<< HEAD
       <Card className="w-[700px]">
         <CardHeader className="flex flex-col items-center">
           <CardTitle className="text-[24px]">
+=======
+      <Card className="w-[300px] sm:w-[700px] border-0 sm:border">
+        <CardHeader className="flex flex-col items-center">
+          <CardTitle className="text-[24px] text-balance">
+>>>>>>> origin/main
             {page === 1 && "Add Store"}
             {page === 2 && "Add Store Address"}
             {page === 3 && "Confirm your store address"}
             {page === 4 && "Verify Information"}
           </CardTitle>
+<<<<<<< HEAD
           <CardDescription>
+=======
+          <CardDescription className="text-center text-balance">
+>>>>>>> origin/main
             {page === 1 && "Fill the fields below to create a new store."}
             {page === 2 && "Fill the fields below to add your store location."}
             {page === 3 && "Review the recommended changes."}
