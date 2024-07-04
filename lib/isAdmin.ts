@@ -1,11 +1,12 @@
 "use server";
-import { db } from "./db";
+import { getAllStoresByUserId } from "@/data/store";
 
 export const isAdmin = async (
   id: string | undefined | null,
   userId: string | undefined
 ) => {
-  const stores = await db.store.findMany({ where: { userId } });
+  if (!userId) return { error: "Not Authenticated!" };
+  const stores = await getAllStoresByUserId(userId);
   const bool = stores.some((store) => store.id === id);
   console.log("Bool:", bool);
   return bool;

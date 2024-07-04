@@ -31,7 +31,6 @@ export const createStore = async (
   if (!user) {
     return { error: "Something went wrong!" };
   }
-
   await db.store.create({
     data: {
       name: storeName,

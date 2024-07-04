@@ -34,18 +34,29 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "../mode-toggle";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 
-import { useParams, usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { isAdmin } from "@/lib/isAdmin";
 
 interface DashboardProps {
   children: React.ReactNode;
   name: string;
   email: string;
   image: string;
+}
+
+interface StoreProps {
+  id: string;
+  userId: string;
+  name: string;
+  category: string;
+  description: string;
+  teamMembers: string[];
+  address: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export function Dashboard({ children, name, email, image }: DashboardProps) {

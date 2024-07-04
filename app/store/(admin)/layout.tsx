@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { Dashboard } from "@/components/dashboard";
+import { Dashboard } from "@/components/dashboard/dashboard";
 
 export default async function DashboardLayout({
   children,
